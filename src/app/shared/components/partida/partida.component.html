@@ -1,0 +1,158 @@
+<div class="container mx-auto text-center my-4" style="position: relative;">
+  <div class="row">
+    <div class="col-12 mb-4 mb-sm-4 col-sm-6">
+      <button (click)="sortearTimes()" [disabled]="btnSortear" type="button" class="btn btn-primary w-100">Sortear equipes</button>
+    </div>
+    <div class="col-12 col-my-4 col-my-sm-4 col-sm-6">
+      <button (click)="sortearNovamente()" type="button" class="btn btn-primary w-100">Adicionar Resultados</button>
+    </div>
+    <div class="col-12 my-4">
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Time A
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">N.º</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let jogador of jogadoresTimeA">
+                  <th scope="row">
+                    <img src="../../../../assets/img/jogador.png" alt="">
+                  </th>
+                  <th>1</th>
+                  <td>{{jogador.nome}}</td>
+                  <td>{{jogador.time}}</td>
+               </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 my-4">
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
+              Time B
+            </button>
+          </h2>
+          <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">N.º</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let jogador of jogadoresTimeB">
+                  <th scope="row">
+                    <img src="../../../../assets/img/jogador.png" alt="">
+                  </th>
+                  <th>1</th>
+                  <td>{{jogador.nome}}</td>
+                  <td>{{jogador.time}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 my-4">
+      <h2 class="">Conometro</h2>
+      <span class="" style="font-size: 3rem;">{{formatarTempo(tempoDecorrido)}}</span>
+      <div class="progress my-4">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [style.width.%]="progresso"></div>
+      </div>
+      <button (click)="iniciarCronometro()" [disabled]="btnPlayPaused" type="button" class="btn btn-primary my-4 w-100">{{ pausado ? 'Iniciar' : 'Pausar' }}</button>
+    </div>
+    <div class="modal fade" id="myModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLabel">Modal</h4>
+          </div>
+          <div class="modal-body">
+            <span>{{formatarTempo(tempoDecorrido)}}</span>
+
+            <select [(ngModel)]="acrescimo" name="acrescimo" class="form-select" aria-label="Default select example">
+              <option selected value="">Selecione o acrescimo</option>
+              <option value="20">1 Minuto</option>
+              <option value="120">2 Minutos</option>
+              <option value="180">3 Minutos</option>
+            </select>
+            <span>{{campoObrigatorio}}</span>
+          </div>
+          <div class="modal-footer">
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button  (click)="addAcrescimo()" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="newPlacar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLabel">Digite o placar</h4>
+          </div>
+          <div class="modal-body w-100">
+            <div class="row w-100 m-0">
+              <div class="col-6 mb-3">
+                <label for="basic-url">Time A</label>
+                <input [(ngModel)]="placarTimeA" type="text" class="form-control" placeholder="Digite o Placar" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <span>{{campoObrigatorio}}</span>
+              </div>
+              <div class="col-6 mb-3">
+                <label for="basic-url">Time B</label>
+                <input [(ngModel)]="placarTimeB" type="text" class="form-control" placeholder="Digite o Placar" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <span>{{campoObrigatorio}}</span>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <div class="modal-footer">
+              <button  (click)="resultPlacar()" type="button" class="btn btn-primary">Salvar Placar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="newPartida" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLabel">Sortear nova partida</h4>
+          </div>
+          <div class="modal-footer">
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button  (click)="sortearNovamente()" type="button" class="btn btn-primary">Sortear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
